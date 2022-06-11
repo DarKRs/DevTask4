@@ -9,11 +9,11 @@ using Microsoft.EntityFrameworkCore.Design;
 
 namespace DataBase
 {
-    public class AppContext : DbContext
+    public class ApplicationContext : DbContext
     {
         public DbSet<Furniture> furnitures { get; set; }    
         
-        public AppContext(DbContextOptions<AppContext> options) : base(options) {
+        public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options) {
             Database.EnsureCreated();
             if (!furnitures.Any())
             {
@@ -28,14 +28,14 @@ namespace DataBase
     /// <summary>
     /// For Migrations
     /// </summary>
-    public class AppContextFactory : IDesignTimeDbContextFactory<AppContext>
+    public class AppContextFactory : IDesignTimeDbContextFactory<ApplicationContext>
     {
-        public AppContext CreateDbContext(string[] args)
+        public ApplicationContext CreateDbContext(string[] args)
         {
-            var optionsBuilder = new DbContextOptionsBuilder<AppContext>();
-            optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=DevTask4;Trusted_Connection=True;MultipleActiveResultSets=true", b => b.MigrationsAssembly("DataBase"));
+            var optionsBuilder = new DbContextOptionsBuilder<ApplicationContext>();
+            optionsBuilder.UseSqlServer("Server=localhost;Database=DevTask4;Trusted_Connection=True", b => b.MigrationsAssembly("DataBase"));
 
-            return new AppContext(optionsBuilder.Options);
+            return new ApplicationContext(optionsBuilder.Options);
         }
     }
 }
