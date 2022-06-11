@@ -1,8 +1,24 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
-
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+﻿@model IEnumerable<DataBase.Entityes.Furniture>
+ 
+<h2>Список мебели</h2>
+<p><a asp-action="Create">Добавить мебель</a></p>
+<table class="table">
+     <tr><th>Имя</th><th>Тип</th><th>Размер</th><th>Цена</th></tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Name</td>
+            <td>@item.Type</td>
+            <td>@item.Size</td>
+            <td>@item.Cost</td>
+            <td>
+                <a asp-action="Edit" asp-controller="Home" asp-route-id="@item.Id">Изменить</a>
+            </td>
+            <td>
+                <form asp-controller="Home" asp-action="Delete" method="post"  asp-route-id="@item.Id">
+                    <input type="submit" value="Удалить" />
+                </form>
+            </td>
+        </tr>
+    }
+</table>

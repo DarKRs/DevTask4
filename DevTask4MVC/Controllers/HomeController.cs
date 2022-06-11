@@ -20,6 +20,55 @@ namespace DevTask4MVC.Controllers
             return View(await db.furnitures.ToListAsync());
         }
 
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(Furniture user)
+        {
+            db.furnitures.Add(user);
+            await db.SaveChangesAsync();
+            return RedirectToAction("Index");
+        }
+
+
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id != null)
+            {
+                Furniture? user = await db.furnitures.FirstOrDefaultAsync(p => p.Id == id);
+                if (user != null) return View(user);
+            }
+            return NotFound();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(Furniture user)
+        {
+            db.furnitures.Update(user);
+            await db.SaveChangesAsync();
+            return RedirectToAction("Index");
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id != null)
+            {
+                Furniture? app = db.furnitures.FirstOrDefault(x => x.Id == id);
+                if (app != null)
+                {
+                    db.furnitures.Remove(app);
+                    await db.SaveChangesAsync();
+                    return RedirectToAction("Index");
+                }
+            }
+            return NotFound();
+        }
+
         public IActionResult Privacy()
         {
             return View();
